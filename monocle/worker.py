@@ -5,6 +5,7 @@ from queue import Empty
 from itertools import cycle
 from sys import exit
 from concurrent.futures import CancelledError
+from distutils.version import StrictVersion
 
 from aiopogo import PGoApi, exceptions as ex
 from aiopogo.auth_ptc import AuthPtc
@@ -47,8 +48,6 @@ del _unit
 class Worker:
     """Single worker walking on the map"""
 
-    if conf.FORCED_KILL:
-        versions = ('0.59.1', '0.57.4', '0.57.3', '0.57.2', '0.55.0')
     download_hash = "7b9c5056799a2c5c7d48a62c497736cbcf8c4acb"
     scan_delay = conf.SCAN_DELAY if conf.SCAN_DELAY >= 10 else 10
     g = {'seen': 0, 'captchas': 0}
@@ -180,7 +179,7 @@ class Worker:
             raise err
 
         self.error_code = '°'
-        version = 5901
+        version = 6100
         async with self.sim_semaphore:
             self.error_code = 'APP SIMULATION'
             if conf.APP_SIMULATION:
@@ -557,11 +556,13 @@ class Worker:
                 try:
                     if (not dl_hash
                             and conf.FORCED_KILL
-                            and dl_settings['settings']['minimum_client_version'] not in self.versions):
-                        err = 'A new version is being forced, exiting.'
-                        self.log.error(err)
-                        print(err)
-                        exit()
+                            and dl_settings['settings']['minimum_client_version'] != '0.61.0'):
+                        forced_version = StrictVersion(dl_settings['settings']['minimum_client_version'])
+                        if forced_version > StrictVersion('0.61.0'):
+                            err = '{} is being forced, exiting.'.format(forced_version)
+                            self.log.error(err)
+                            print(err)
+                            exit()
                 except KeyError:
                     pass
         if self.check_captcha(responses):
