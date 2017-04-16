@@ -394,29 +394,21 @@ window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) 
                              params[key] = value;
                              });
 if(parseFloat(params.lat) && parseFloat(params.lon)){
-  var map = new L.map('main-map', {
+  var map = new L.Map('main-map', {
                       center: [params.lat, params.lon],
                       maxZoom: 18,
                       zoom: params.zoom || 16
                       });
 }
 else{
-    var map = L.map('main-map', {preferCanvas: true, maxZoom: 18,}).setView(_MapCoords, 16);
-
+  var map = L.map('main-map', {preferCanvas: true, maxZoom: 18,}).setView(_MapCoords, 16);
 }
-
-
-
 
 map.addLayer(overlays.Pokemon);
 overlays.ScanArea.addTo(map);
 
-<<<<<<< HEAD
 var control = L.control.layers(null, overlays).addTo(map);
 L.tileLayer(_MapProviderUrl, {
-=======
-L.gridLayer.googleMutant(_MapProviderUrl, {
->>>>>>> google_mutant
     opacity: 0.75,
     attribution: _MapProviderAttribution
 }).addTo(map);
