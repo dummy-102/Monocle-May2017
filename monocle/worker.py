@@ -947,14 +947,6 @@ class Worker:
             pokemon['height'] = pdata['height_m']
             pokemon['weight'] = pdata['weight_kg']
             pokemon['gender'] = pdata['pokemon_display']['gender']
-<<<<<<< HEAD
-=======
-            #Check form just for Unown
-            if pdata['pokemon_id'] == 201 and pdata['pokemon_display']['form'] > 0: 
-                pokemon['form'] = pdata['pokemon_display']['form']
-            else:
-                pokemon['form'] = None
->>>>>>> develop_unown
         except KeyError:
             self.log.error('Missing Pokemon data in encounter response.')
         self.error_code = '!'
