@@ -75,9 +75,9 @@ async def main():
                 lat, lon = randomize_point(center, 0.0001)
 
             try:
-                alt = altitudes.get((lat, lon))
+                alt = altitudes.get(point)
             except KeyError:
-                alt = await altitudes.fetch((lat, lon))
+                alt = await altitudes.fetch(point)
 
             try:
                 device_info = get_device_info(account)
