@@ -253,11 +253,7 @@ function addPokemonToMap (data, map) {
         if (marker.overlay !== "Hidden"){
             marker.addTo(overlays[marker.overlay])
         }
-<<<<<<< HEAD
     });
-=======
-    }); 
->>>>>>> develop
     updateTime();
     if (_updateTimeInterval === null){
         _updateTimeInterval = setInterval(updateTime, 1000);
