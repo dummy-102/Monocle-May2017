@@ -146,7 +146,11 @@ function getOpacity (diff) {
 }
 
 function PokemonMarker (raw) {
-    var totaliv = 100 * (raw.atk + raw.def + raw.sta) / 45;
+    if (getPreference("SHOW_IV") === "1"){
+        var totaliv = 100 * (raw.atk + raw.def + raw.sta) / 45;
+    }else{
+        var totaliv = 0;
+    }
     var icon = new PokemonIcon({iconID: raw.pokemon_id, iv: totaliv, expires_at: raw.expires_at});
     var marker = L.marker([raw.lat, raw.lon], {icon: icon, opacity: 1});
 
@@ -191,7 +195,7 @@ function PokemonMarker (raw) {
             marker.setOpacity(getOpacity(diff));
         } else {
             overlays.Pokemon.removeLayer(marker);
-            overlays.Pokemon.refreshClusters();
+            overlays.Pokemon.refreshClusters(marker);
             markers[marker.raw.id] = undefined;
             clearInterval(marker.opacityInterval);
         }
@@ -249,7 +253,11 @@ function addPokemonToMap (data, map) {
         if (marker.overlay !== "Hidden"){
             marker.addTo(overlays[marker.overlay])
         }
+<<<<<<< HEAD
     });
+=======
+    }); 
+>>>>>>> develop
     updateTime();
     if (_updateTimeInterval === null){
         _updateTimeInterval = setInterval(updateTime, 1000);
@@ -330,6 +338,7 @@ function getPokemon () {
         });
     }).then(function (data) {
         addPokemonToMap(data, map);
+        overlays.Pokemon.refreshClusters();
     });
 }
 
@@ -394,7 +403,7 @@ window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) 
                              params[key] = value;
                              });
 if(parseFloat(params.lat) && parseFloat(params.lon)){
-  var map = new L.Map('main-map', {
+    var map = new L.Map('main-map', {
                       center: [params.lat, params.lon],
                       maxZoom: 18,
                       zoom: params.zoom || 16
