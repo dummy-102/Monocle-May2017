@@ -79,6 +79,7 @@ _valid_types = {
     'MINIMUM_RUNTIME': Number,
     'MINIMUM_SCORE': Number,
     'MORE_POINTS': bool,
+    'MOTD': str,
     'MOVE_FONT': str,
     'NAME_FONT': str,
     'NEVER_NOTIFY_IDS': set_sequence_range,
@@ -185,8 +186,14 @@ _defaults = {
     'MAX_RETRIES': 3,
     'MINIMUM_RUNTIME': 10,
     'MORE_POINTS': False,
+<<<<<<< HEAD
     'MOVE_FONT': None,
     'NAME_FONT': None,
+=======
+    'MOTD': None,
+    'MOVE_FONT': 'sans-serif',
+    'NAME_FONT': 'sans-serif',
+>>>>>>> refactor_message_banner
     'NEVER_NOTIFY_IDS': (),
     'NOTIFY': False,
     'NOTIFY_IDS': None,
